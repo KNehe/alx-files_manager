@@ -1,10 +1,12 @@
-import crypto from 'crypto';
+import { createHash } from 'crypto';
 
 function hashPassword(password) {
-  const hash = crypto.createHash('sha1');
-  const data = hash.update(password, 'utf-8');
-  const genHash = data.digest('hex');
-  return genHash;
+  const hash = createHash('sha1').update(password).digest('hex');
+  return hash;
 }
 
-module.exports = hashPassword;
+function unHashPassword(hashedPassword) {
+  return hashedPassword;
+}
+
+export { hashPassword, unHashPassword };
