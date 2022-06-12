@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import { createClient } from 'redis';
 import { promisify } from 'util';
 

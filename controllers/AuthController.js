@@ -23,7 +23,7 @@ class AuthController {
     const uuid = uuidv4();
     const key = `auth_${uuid}`;
     await redisClient.set(key, user._id.toString(), 86400);
-    return res.status(200).json({ uuid });
+    return res.status(200).json({ token: uuid });
   }
 
   static async getDisconnect(req, res) {
@@ -34,7 +34,7 @@ class AuthController {
     const user = await redisClient.get(key);
     if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
-    await redisClient.del(token);
+    await redisClient.del(key);
 
     return res.status(204).send();
   }

@@ -59,7 +59,7 @@ class FilesController {
   }
 
   static async postUpload(req, res) {
-    const user = await this.getUserFromToken(req);
+    const user = await FilesController.getUserFromToken(req);
     if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
     const acceptedTypes = ['folder', 'file', 'image'];
@@ -103,11 +103,11 @@ class FilesController {
 
     fileData.localPath = filePath;
     const decodedData = Buffer.from(data, 'base64');
-    const pathExists = await this.pathExists(folderPath);
+    const pathExists = await FilesController.pathExists(folderPath);
     if (!pathExists) {
       await fs.promises.mkdir(folderPath, { recursive: true });
     }
-    return this.writeToFile(res, filePath, decodedData, fileData);
+    return FilesController.writeToFile(res, filePath, decodedData, fileData);
   }
 }
 
